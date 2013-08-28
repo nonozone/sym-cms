@@ -9,16 +9,23 @@
     </ul>
 </xsl:template>
 
+
 <xsl:template match="navigation/page">
     <li>
-    <xsl:if test="@handle = $root-page">
-       <xsl:attribute name="class">
-		  <xsl:text>selected</xsl:text>
-	   </xsl:attribute>
-    </xsl:if>
-        <a href="{$root}/{@handle}/">
-		<xsl:value-of select="name"/>
-		</a>
+        <a>
+            <xsl:choose>
+                <xsl:when test="types/type = 'index'">
+                    <xsl:attribute name="href"><xsl:value-of select="$root"/>/</xsl:attribute>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="href"><xsl:value-of select="$root"/>/<xsl:value-of select="@handle"/></xsl:attribute>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:if test="@handle = $current-page">
+                <xsl:attribute name="current">active</xsl:attribute>
+            </xsl:if>
+            <xsl:value-of select="name"/>
+        </a>
     </li>
 </xsl:template>
 
